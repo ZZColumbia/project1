@@ -1,0 +1,52 @@
+{% extends "layout.html" %}
+{% block title %}Comment{% endblock %}
+{% block content %}
+    <div class="container" align="center">
+        <h1>{{ home }} V.S. {{ guest }}
+            <small> Match Date: {{ schedule }}</small>
+        </h1>
+
+        <table class="table table-striped">
+            <tbody>
+            {% for row in comment %}
+                <tr>
+                    <td>{{ row['content'] }}</td>
+                    <td align="right">- user: {{ row['user_name'] }}, time: {{ row['time'] }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+
+        {% if session.get('logged_in') %}
+            <form action="{{ url_for('comment') }}?home={{ home }}&guest={{ guest }}&schedule={{ schedule }}"
+                  method="post">
+                <dl>
+                    <dt><h2>Comment:</h2>
+                    <dd><textarea name="text" rows="5" cols="80"></textarea>
+                    <dd>
+                        <button type="submit" class="btn btn-default">Submit</button>
+                        {% if get_flashed_messages() %}
+                            <div class="alert alert-success alert-dismissable">
+                                <button type="button" class="close" data-dismiss="alert"
+                                        aria-hidden="true">
+                                    &times;
+                                </button>
+                                {{ get_flashed_messages()[0] }}
+                            </div>
+                        {% endif %}
+                </dl>
+            </form>
+        {% else %}
+            <div class="alert alert-success alert-dismissable">
+                <button type="button" class="close" data-dismiss="alert"
+                        aria-hidden="true">
+                    &times;
+                </button>
+                Please log in to add new comments!!
+            </div>
+
+        {% endif %}
+    </div>
+
+{% endblock %}

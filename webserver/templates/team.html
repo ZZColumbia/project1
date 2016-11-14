@@ -1,0 +1,44 @@
+{% extends "layout.html" %}
+{% block title %}leagues{% endblock %}
+{% block  content %}
+    <div class="container">
+        <h1>{{ league_name }}<small>  Official Website: <a href="{{ url }}">{{ url }}</a></small></h1>
+        <h2>Clubs</h2>
+
+        <table class="table table-striped">
+            <tr>
+                <th>Club List</th>
+                <th>Coach</th>
+            </tr>
+            {% for row in team %}
+                <tr>
+                    <td><a href="{{ url_for('teaminfo') }}?teamname={{ row[0] }}">{{ row[0] }}</a></td>
+                    <td>{{ row[1] }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+
+        <h2>Match Schedule</h2>
+
+        <table class="table table-striped">
+            <tr>
+                <th>Home&Guest</th>
+                <th>Match Date</th>
+                <th>Result</th>
+            </tr>
+            {% for row in match %}
+                <tr>
+                    <td>
+                        <a href="{{ url_for('comment') }}?home={{ row[0][0] }}&guest={{ row[0][1] }}&schedule={{ row[1] }}">{{ row[0][0] }}
+                            V.S. {{ row[0][1] }}</a></td>
+                    <td>{{ row[1] }}</td>
+                    {% if row[2] == [] %}
+                        <td>Upcoming!!</td>
+                    {% else %}
+                        <td>{{ row[2][0] }} : {{ row[2][1] }}</td>
+                    {% endif %}
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
+{% endblock %}

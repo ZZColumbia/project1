@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% block head %}
+        <meta charset="UTF-8">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+        <!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+              integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+              crossorigin="anonymous">
+
+        <!-- Optional theme -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
+              integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp"
+              crossorigin="anonymous">
+
+        <!-- Latest compiled and minified JavaScript -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+                integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+                crossorigin="anonymous"></script>
+        <title>{% block title %}{% endblock %}</title>
+
+    {% endblock %}
+
+</head>
+
+<body {% block style %}{% endblock %}>
+<div class="container">
+    <div class="col-md-12">
+        <nav class="navbar navbar-inverse navbar-fixed-top">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="{{ url_for('homepage') }}">Soccer World</a>
+                </div>
+                <div>
+                    <div class="collapse navbar-collapse" id="myNavbar">
+                        <ul class="nav navbar-nav">
+                            <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown"
+                                                    href="#">Leagues<span
+                                    class="caret"></span></a>
+                                <ul class="dropdown-menu">
+                                    {% for row in league %}
+                                        {#                                        {% for row in ['English Premier League' , 'German Bundesliga', 'French Ligue 1'] %}#}
+                                        <li>
+                                            <a href="{{ url_for('team') }}?league_name={{ row[0] }}&url={{ row[1] }}"
+                                               target="_blank">{{ row[0] }}</a></li>
+                                    {% endfor %}
+                                </ul>
+                            <li class="dropdown">
+                                {% if not session.get('logged_in') %}
+                                    <a href="{{ url_for('login') }}">log in</a>
+                                    {% if get_flashed_messages() %}
+                                        <div class="alert alert-success alert-dismissable">
+                                            <button type="button" class="close" data-dismiss="alert"
+                                                    aria-hidden="true">
+                                                &times;
+                                            </button>
+                                            {{ get_flashed_messages()[0] }}
+                                        </div>
+                                    {% endif %}
+                                {% else %}
+                                    <a href="{{ url_for('logout') }}">log out</a>
+                                    <li class="dropdown"><a href="{{ url_for('favorite') }}" target="_blank">My
+                                        Favorite</a>
+                                    </li>
+                                {% endif %}
+
+                            </li>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </div>
+</div>
+
+<hr>
+{#<img src="{{ url_for('static', filename='img/body-bg.jpg' , _external=true) }}" class="img-responsive" alt="soccer">#}
+{% block content %}{% endblock %}
+</body>
+
+</html>

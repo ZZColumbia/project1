@@ -1,0 +1,74 @@
+{% extends "layout.html" %}
+{% block title %}teaminfo{% endblock %}
+{% block content %}
+    <div class="container">
+        <h2>{{ teamname }}</h2>
+        <h3>Team Performance</h3>
+        <table class="table table-striped">
+            <tr>
+                <th>Team Name</th>
+                <th>Season</th>
+                <th>WDL</th>
+                <th>Game Played</th>
+                <th>Goal Scored</th>
+                <th>Goal Against</th>
+            </tr>
+            {% for row in performance %}
+                <tr>
+                    {% for col in row %}
+                        {% if col == row[2] %}
+                            <td>{{ col[0] }},{{ col[1] }},{{ col[2] }}</td>
+                        {% else %}
+                            <td>{{ col }}</td>
+                        {% endif %}
+                    {% endfor %}
+                </tr>
+            {% endfor %}
+        </table>
+        <h3>Team members</h3>
+        <table class="table table-striped">
+            <tr>
+                <th>Player Name</th>
+                <th>Birth</th>
+                <th>Height</th>
+                <th>Weight</th>
+                <th>Position</th>
+                <th>Goal</th>
+                <th>Assist</th>
+                <th>Join Year</th>
+                <th>Team Name</th>
+                <th>Jersey Number</th>
+            </tr>
+            {% for row in player %}
+                <tr>
+                    {% for col in row %}
+                        <td>{{ col }}</td>
+                    {% endfor %}
+                </tr>
+            {% endfor %}
+        </table>
+
+        <h3>Match Schedule</h3>
+        <table class="table table-striped">
+            <tr>
+                <th>Home&Guest</th>
+                <th>Match Date</th>
+                <th>Result</th>
+            </tr>
+            {% for row in match %}
+                <tr>
+                    <td>
+                        <a href="{{ url_for('comment') }}?home={{ row[0][0] }}&guest={{ row[0][1] }}&schedule={{ row[1] }}">{{ row[0][0] }}
+                            V.S. {{ row[0][1] }}</a></td>
+                    <td>{{ row[1] }}</td>
+                    {% if row[2] == [] %}
+                        <td>Upcoming!!</td>
+                    {% else %}
+                        <td>{{ row[2][0] }} : {{ row[2][1] }}</td>
+                    {% endif %}
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
+
+{% endblock %}
