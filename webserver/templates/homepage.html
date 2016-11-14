@@ -53,31 +53,5 @@
             </a>
         </div>
     </div>
-
-
-
-    {#    {% if not session.get('logged_in') %}#}
-    {#        <a href="{{ url_for('login') }}">log in</a>#}
-    {#        {% if get_flashed_messages() %}#}
-    {#            <br>{{ get_flashed_messages()[0] }}<br>#}
-    {#        {% endif %}#}
-    {#    {% else %}#}
-    {#        <a href="{{ url_for('logout') }}">log out</a>#}
-    {#        {% if get_flashed_messages() %}#}
-    {#            <br>{{ get_flashed_messages()[0] }}<br>#}
-    {#        {% endif %}#}
-    {#        Welcome {{ username }}!!  <a href="{{ url_for('favorite') }}" target="_blank">my favorite</a>#}
-    {#    {% endif %}#}
-
-    {#<table>#}
-    {#    <tr>#}
-    {#        <th>League Name</th>#}
-    {#    </tr>#}
-    {#    {% for row in league %}#}
-    {#        <tr>#}
-    {#            <td><a href="{{ url_for('team') }}?league_name={{ row[0] }}&url={{ row[1] }}" target="_blank">{{ row[0] }}</a></td>#}
-    {#        </tr>#}
-    {#    {% endfor %}#}
-    {#</table>#}
-
+    
 {% endblock %}
